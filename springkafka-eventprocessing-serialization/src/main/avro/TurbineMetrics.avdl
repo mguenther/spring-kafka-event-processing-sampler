@@ -1,0 +1,31 @@
+@namespace("net.mguenther.springkafka.eventprocessing.serialization")
+protocol TurbineLog {
+
+  enum TurbineState {
+    NORMAL_OPERATION,
+    CURTAILED_OPERATION,
+    ERROR,
+    UNKNOWN
+  }
+
+  record TurbineMetrics {
+
+    /** Unique identifier for a wind turbine in the field. */
+    long turbineId;
+
+    /** Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds. */
+    long timestamp;
+
+    /** The operational state of the wind turbine for the last timestep. */
+    TurbineState turbineState = "UNKNOWN";
+
+    /** Represents the average produced wattage for the last timestep in kW */
+    double powerOutput;
+
+    /** Represents the average wind speed for the last timestep in m/s */
+    double windSpeed;
+
+    /** Represents the average temperature for the last timestep in °C */
+    double temperature;
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "namespace": "net.mguenther.springkafka.eventprocessing.serialization",
+  "name": "TurbineMetrics",
+  "type": "record",
+  "fields": [
+    {
+      "name": "turbineId",
+      "type": "long",
+      "order": "ignore",
+      "doc": "Unique identifier for a wind turbine in the field."
+    },
+    {
+      "name": "timestamp",
+      "type": "long",
+      "order": "descending",
+      "doc": "Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds."
+    },
+    {
+      "name": "turbineState",
+      "type": {
+        "name": "TurbineState",
+        "type": "enum",
+        "symbols": ["NORMAL_OPERATION", "CURTAILED_OPERATION", "ERROR", "UNKNOWN"]
+      },
+      "default": "UNKNOWN",
+      "order": "ignore",
+      "doc": "The operational state of the wind turbine for the last timestep."
+    },
+    {
+      "name": "powerOutput",
+      "type": "double",
+      "order": "ignore",
+      "doc": "Represents the average produced wattage for the last timestep in kW"
+    },
+    {
+      "name": "windSpeed",
+      "type": "double",
+      "order": "ignore",
+      "doc": "Represents the average wind speed for the last timestep in m/s"
+    },
+    {
+      "name": "temperature",
+      "type": "double",
+      "order": "ignore",
+      "doc": "Represents the average temperature for the last timestep in °C"
+    }
+  ]
+}
