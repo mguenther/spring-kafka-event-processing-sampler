@@ -45,6 +45,7 @@
 
     <modules>
         <module>springkafka-eventprocessing-serialization</module>
+        <module>springkafka-eventprocessing-generator</module>
     </modules>
 
     <build>
