@@ -18,7 +18,7 @@ public class TurbineMetricsConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(TurbineMetricsConsumer.class);
 
-    @KafkaListener(topics = "${turbine-metrics.topic}", group = "turbine-metrics-feeder", containerFactory = "batchFactory")
+    @KafkaListener(topics = "${turbine-metrics.topic}", groupId = "turbine-metrics-feeder", containerFactory = "batchFactory")
     public void listen(final List<TurbineMetrics> listOfTurbineMetrics, final Acknowledgment acknowledgment) {
 
         log.info("Received batch of {} turbine metrics data items.", listOfTurbineMetrics.size());

@@ -4,10 +4,10 @@
  * DO NOT EDIT DIRECTLY
  */
 package net.mguenther.springkafka.eventprocessing.serialization;
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
-public enum TurbineState {
+public enum TurbineState implements org.apache.avro.generic.GenericEnumSymbol<TurbineState> {
   NORMAL_OPERATION, CURTAILED_OPERATION, ERROR, UNKNOWN  ;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"TurbineState\",\"namespace\":\"net.mguenther.springkafka.eventprocessing.serialization\",\"symbols\":[\"NORMAL_OPERATION\",\"CURTAILED_OPERATION\",\"ERROR\",\"UNKNOWN\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
 }

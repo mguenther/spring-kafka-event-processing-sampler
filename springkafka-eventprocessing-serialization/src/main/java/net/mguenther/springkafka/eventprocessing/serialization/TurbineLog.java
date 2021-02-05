@@ -5,7 +5,6 @@
  */
 package net.mguenther.springkafka.eventprocessing.serialization;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface TurbineLog {
   public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"TurbineLog\",\"namespace\":\"net.mguenther.springkafka.eventprocessing.serialization\",\"types\":[{\"type\":\"enum\",\"name\":\"TurbineState\",\"symbols\":[\"NORMAL_OPERATION\",\"CURTAILED_OPERATION\",\"ERROR\",\"UNKNOWN\"]},{\"type\":\"record\",\"name\":\"TurbineMetrics\",\"fields\":[{\"name\":\"turbineId\",\"type\":\"long\",\"doc\":\"Unique identifier for a wind turbine in the field.\"},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds.\"},{\"name\":\"turbineState\",\"type\":\"TurbineState\",\"doc\":\"The operational state of the wind turbine for the last timestep.\",\"default\":\"UNKNOWN\"},{\"name\":\"powerOutput\",\"type\":\"double\",\"doc\":\"Represents the average produced wattage for the last timestep in kW\"},{\"name\":\"windSpeed\",\"type\":\"double\",\"doc\":\"Represents the average wind speed for the last timestep in m/s\"},{\"name\":\"temperature\",\"type\":\"double\",\"doc\":\"Represents the average temperature for the last timestep in °C\"}]}],\"messages\":{}}");

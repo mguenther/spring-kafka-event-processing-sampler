@@ -5,26 +5,84 @@
  */
 package net.mguenther.springkafka.eventprocessing.serialization;
 
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
+import org.apache.avro.message.BinaryMessageEncoder;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.SchemaStore;
 
-@SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -8267315594068426L;
   public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"TurbineMetrics\",\"namespace\":\"net.mguenther.springkafka.eventprocessing.serialization\",\"fields\":[{\"name\":\"turbineId\",\"type\":\"long\",\"doc\":\"Unique identifier for a wind turbine in the field.\"},{\"name\":\"timestamp\",\"type\":\"long\",\"doc\":\"Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds.\"},{\"name\":\"turbineState\",\"type\":{\"type\":\"enum\",\"name\":\"TurbineState\",\"symbols\":[\"NORMAL_OPERATION\",\"CURTAILED_OPERATION\",\"ERROR\",\"UNKNOWN\"]},\"doc\":\"The operational state of the wind turbine for the last timestep.\",\"default\":\"UNKNOWN\"},{\"name\":\"powerOutput\",\"type\":\"double\",\"doc\":\"Represents the average produced wattage for the last timestep in kW\"},{\"name\":\"windSpeed\",\"type\":\"double\",\"doc\":\"Represents the average wind speed for the last timestep in m/s\"},{\"name\":\"temperature\",\"type\":\"double\",\"doc\":\"Represents the average temperature for the last timestep in °C\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+
+  private static SpecificData MODEL$ = new SpecificData();
+
+  private static final BinaryMessageEncoder<TurbineMetrics> ENCODER =
+      new BinaryMessageEncoder<TurbineMetrics>(MODEL$, SCHEMA$);
+
+  private static final BinaryMessageDecoder<TurbineMetrics> DECODER =
+      new BinaryMessageDecoder<TurbineMetrics>(MODEL$, SCHEMA$);
+
+  /**
+   * Return the BinaryMessageEncoder instance used by this class.
+   * @return the message encoder used by this class
+   */
+  public static BinaryMessageEncoder<TurbineMetrics> getEncoder() {
+    return ENCODER;
+  }
+
+  /**
+   * Return the BinaryMessageDecoder instance used by this class.
+   * @return the message decoder used by this class
+   */
+  public static BinaryMessageDecoder<TurbineMetrics> getDecoder() {
+    return DECODER;
+  }
+
+  /**
+   * Create a new BinaryMessageDecoder instance for this class that uses the specified {@link SchemaStore}.
+   * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
+   * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
+   */
+  public static BinaryMessageDecoder<TurbineMetrics> createDecoder(SchemaStore resolver) {
+    return new BinaryMessageDecoder<TurbineMetrics>(MODEL$, SCHEMA$, resolver);
+  }
+
+  /**
+   * Serializes this TurbineMetrics to a ByteBuffer.
+   * @return a buffer holding the serialized data for this instance
+   * @throws java.io.IOException if this instance could not be serialized
+   */
+  public java.nio.ByteBuffer toByteBuffer() throws java.io.IOException {
+    return ENCODER.encode(this);
+  }
+
+  /**
+   * Deserializes a TurbineMetrics from a ByteBuffer.
+   * @param b a byte buffer holding serialized data for an instance of this class
+   * @return a TurbineMetrics instance decoded from the given buffer
+   * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
+   */
+  public static TurbineMetrics fromByteBuffer(
+      java.nio.ByteBuffer b) throws java.io.IOException {
+    return DECODER.decode(b);
+  }
+
   /** Unique identifier for a wind turbine in the field. */
-  @Deprecated public long turbineId;
+   private long turbineId;
   /** Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds. */
-  @Deprecated public long timestamp;
+   private long timestamp;
   /** The operational state of the wind turbine for the last timestep. */
-  @Deprecated public net.mguenther.springkafka.eventprocessing.serialization.TurbineState turbineState;
+   private net.mguenther.springkafka.eventprocessing.serialization.TurbineState turbineState;
   /** Represents the average produced wattage for the last timestep in kW */
-  @Deprecated public double powerOutput;
+   private double powerOutput;
   /** Represents the average wind speed for the last timestep in m/s */
-  @Deprecated public double windSpeed;
+   private double windSpeed;
   /** Represents the average temperature for the last timestep in °C */
-  @Deprecated public double temperature;
+   private double temperature;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -51,6 +109,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
     this.temperature = temperature;
   }
 
+  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
   public org.apache.avro.Schema getSchema() { return SCHEMA$; }
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
@@ -61,7 +120,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
     case 3: return powerOutput;
     case 4: return windSpeed;
     case 5: return temperature;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -75,7 +134,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
     case 3: powerOutput = (java.lang.Double)value$; break;
     case 4: windSpeed = (java.lang.Double)value$; break;
     case 5: temperature = (java.lang.Double)value$; break;
-    default: throw new org.apache.avro.AvroRuntimeException("Bad index");
+    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -83,16 +142,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * Gets the value of the 'turbineId' field.
    * @return Unique identifier for a wind turbine in the field.
    */
-  public java.lang.Long getTurbineId() {
+  public long getTurbineId() {
     return turbineId;
   }
+
 
   /**
    * Sets the value of the 'turbineId' field.
    * Unique identifier for a wind turbine in the field.
    * @param value the value to set.
    */
-  public void setTurbineId(java.lang.Long value) {
+  public void setTurbineId(long value) {
     this.turbineId = value;
   }
 
@@ -100,16 +160,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * Gets the value of the 'timestamp' field.
    * @return Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds.
    */
-  public java.lang.Long getTimestamp() {
+  public long getTimestamp() {
     return timestamp;
   }
+
 
   /**
    * Sets the value of the 'timestamp' field.
    * Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds.
    * @param value the value to set.
    */
-  public void setTimestamp(java.lang.Long value) {
+  public void setTimestamp(long value) {
     this.timestamp = value;
   }
 
@@ -120,6 +181,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
   public net.mguenther.springkafka.eventprocessing.serialization.TurbineState getTurbineState() {
     return turbineState;
   }
+
 
   /**
    * Sets the value of the 'turbineState' field.
@@ -134,16 +196,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * Gets the value of the 'powerOutput' field.
    * @return Represents the average produced wattage for the last timestep in kW
    */
-  public java.lang.Double getPowerOutput() {
+  public double getPowerOutput() {
     return powerOutput;
   }
+
 
   /**
    * Sets the value of the 'powerOutput' field.
    * Represents the average produced wattage for the last timestep in kW
    * @param value the value to set.
    */
-  public void setPowerOutput(java.lang.Double value) {
+  public void setPowerOutput(double value) {
     this.powerOutput = value;
   }
 
@@ -151,16 +214,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * Gets the value of the 'windSpeed' field.
    * @return Represents the average wind speed for the last timestep in m/s
    */
-  public java.lang.Double getWindSpeed() {
+  public double getWindSpeed() {
     return windSpeed;
   }
+
 
   /**
    * Sets the value of the 'windSpeed' field.
    * Represents the average wind speed for the last timestep in m/s
    * @param value the value to set.
    */
-  public void setWindSpeed(java.lang.Double value) {
+  public void setWindSpeed(double value) {
     this.windSpeed = value;
   }
 
@@ -168,16 +232,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * Gets the value of the 'temperature' field.
    * @return Represents the average temperature for the last timestep in °C
    */
-  public java.lang.Double getTemperature() {
+  public double getTemperature() {
     return temperature;
   }
+
 
   /**
    * Sets the value of the 'temperature' field.
    * Represents the average temperature for the last timestep in °C
    * @param value the value to set.
    */
-  public void setTemperature(java.lang.Double value) {
+  public void setTemperature(double value) {
     this.temperature = value;
   }
 
@@ -195,7 +260,11 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * @return A new TurbineMetrics RecordBuilder
    */
   public static net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder newBuilder(net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder other) {
-    return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder(other);
+    if (other == null) {
+      return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder();
+    } else {
+      return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder(other);
+    }
   }
 
   /**
@@ -204,12 +273,17 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
    * @return A new TurbineMetrics RecordBuilder
    */
   public static net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder newBuilder(net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics other) {
-    return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder(other);
+    if (other == null) {
+      return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder();
+    } else {
+      return new net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics.Builder(other);
+    }
   }
 
   /**
    * RecordBuilder for TurbineMetrics instances.
    */
+  @org.apache.avro.specific.AvroGenerated
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<TurbineMetrics>
     implements org.apache.avro.data.RecordBuilder<TurbineMetrics> {
 
@@ -239,27 +313,27 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       super(other);
       if (isValidValue(fields()[0], other.turbineId)) {
         this.turbineId = data().deepCopy(fields()[0].schema(), other.turbineId);
-        fieldSetFlags()[0] = true;
+        fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (isValidValue(fields()[1], other.timestamp)) {
         this.timestamp = data().deepCopy(fields()[1].schema(), other.timestamp);
-        fieldSetFlags()[1] = true;
+        fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (isValidValue(fields()[2], other.turbineState)) {
         this.turbineState = data().deepCopy(fields()[2].schema(), other.turbineState);
-        fieldSetFlags()[2] = true;
+        fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (isValidValue(fields()[3], other.powerOutput)) {
         this.powerOutput = data().deepCopy(fields()[3].schema(), other.powerOutput);
-        fieldSetFlags()[3] = true;
+        fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (isValidValue(fields()[4], other.windSpeed)) {
         this.windSpeed = data().deepCopy(fields()[4].schema(), other.windSpeed);
-        fieldSetFlags()[4] = true;
+        fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (isValidValue(fields()[5], other.temperature)) {
         this.temperature = data().deepCopy(fields()[5].schema(), other.temperature);
-        fieldSetFlags()[5] = true;
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
       }
     }
 
@@ -268,7 +342,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
      * @param other The existing instance to copy.
      */
     private Builder(net.mguenther.springkafka.eventprocessing.serialization.TurbineMetrics other) {
-            super(SCHEMA$);
+      super(SCHEMA$);
       if (isValidValue(fields()[0], other.turbineId)) {
         this.turbineId = data().deepCopy(fields()[0].schema(), other.turbineId);
         fieldSetFlags()[0] = true;
@@ -300,9 +374,10 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       * Unique identifier for a wind turbine in the field.
       * @return The value.
       */
-    public java.lang.Long getTurbineId() {
+    public long getTurbineId() {
       return turbineId;
     }
+
 
     /**
       * Sets the value of the 'turbineId' field.
@@ -342,9 +417,10 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       * Turbine time (in UTC) at which the data was collected. This is a Unix timestamp in seconds.
       * @return The value.
       */
-    public java.lang.Long getTimestamp() {
+    public long getTimestamp() {
       return timestamp;
     }
+
 
     /**
       * Sets the value of the 'timestamp' field.
@@ -388,6 +464,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       return turbineState;
     }
 
+
     /**
       * Sets the value of the 'turbineState' field.
       * The operational state of the wind turbine for the last timestep.
@@ -427,9 +504,10 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       * Represents the average produced wattage for the last timestep in kW
       * @return The value.
       */
-    public java.lang.Double getPowerOutput() {
+    public double getPowerOutput() {
       return powerOutput;
     }
+
 
     /**
       * Sets the value of the 'powerOutput' field.
@@ -469,9 +547,10 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       * Represents the average wind speed for the last timestep in m/s
       * @return The value.
       */
-    public java.lang.Double getWindSpeed() {
+    public double getWindSpeed() {
       return windSpeed;
     }
+
 
     /**
       * Sets the value of the 'windSpeed' field.
@@ -511,9 +590,10 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
       * Represents the average temperature for the last timestep in °C
       * @return The value.
       */
-    public java.lang.Double getTemperature() {
+    public double getTemperature() {
       return temperature;
     }
+
 
     /**
       * Sets the value of the 'temperature' field.
@@ -549,6 +629,7 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public TurbineMetrics build() {
       try {
         TurbineMetrics record = new TurbineMetrics();
@@ -559,26 +640,109 @@ public class TurbineMetrics extends org.apache.avro.specific.SpecificRecordBase 
         record.windSpeed = fieldSetFlags()[4] ? this.windSpeed : (java.lang.Double) defaultValue(fields()[4]);
         record.temperature = fieldSetFlags()[5] ? this.temperature : (java.lang.Double) defaultValue(fields()[5]);
         return record;
-      } catch (Exception e) {
+      } catch (org.apache.avro.AvroMissingFieldException e) {
+        throw e;
+      } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
       }
     }
   }
 
-  private static final org.apache.avro.io.DatumWriter
-    WRITER$ = new org.apache.avro.specific.SpecificDatumWriter(SCHEMA$);
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumWriter<TurbineMetrics>
+    WRITER$ = (org.apache.avro.io.DatumWriter<TurbineMetrics>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
     WRITER$.write(this, SpecificData.getEncoder(out));
   }
 
-  private static final org.apache.avro.io.DatumReader
-    READER$ = new org.apache.avro.specific.SpecificDatumReader(SCHEMA$);
+  @SuppressWarnings("unchecked")
+  private static final org.apache.avro.io.DatumReader<TurbineMetrics>
+    READER$ = (org.apache.avro.io.DatumReader<TurbineMetrics>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeLong(this.turbineId);
+
+    out.writeLong(this.timestamp);
+
+    out.writeEnum(this.turbineState.ordinal());
+
+    out.writeDouble(this.powerOutput);
+
+    out.writeDouble(this.windSpeed);
+
+    out.writeDouble(this.temperature);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.turbineId = in.readLong();
+
+      this.timestamp = in.readLong();
+
+      this.turbineState = net.mguenther.springkafka.eventprocessing.serialization.TurbineState.values()[in.readEnum()];
+
+      this.powerOutput = in.readDouble();
+
+      this.windSpeed = in.readDouble();
+
+      this.temperature = in.readDouble();
+
+    } else {
+      for (int i = 0; i < 6; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.turbineId = in.readLong();
+          break;
+
+        case 1:
+          this.timestamp = in.readLong();
+          break;
+
+        case 2:
+          this.turbineState = net.mguenther.springkafka.eventprocessing.serialization.TurbineState.values()[in.readEnum()];
+          break;
+
+        case 3:
+          this.powerOutput = in.readDouble();
+          break;
+
+        case 4:
+          this.windSpeed = in.readDouble();
+          break;
+
+        case 5:
+          this.temperature = in.readDouble();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
